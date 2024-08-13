@@ -28,6 +28,11 @@ func (g Gen) WriteTupleEncodersToFile(fname, pkg string, types ...interface{}) e
 
 	typeInfos := make([]*GenTypeInfo, len(types))
 	for i, t := range types {
+		gti, ok := t.(*GenTypeInfo)
+		if ok {
+			typeInfos[i] = gti
+			continue
+		}
 		gti, err := ParseTypeInfo(t)
 		if err != nil {
 			return xerrors.Errorf("failed to parse type info: %w", err)
@@ -84,6 +89,11 @@ func (g Gen) WriteMapEncodersToFile(fname, pkg string, types ...interface{}) err
 
 	typeInfos := make([]*GenTypeInfo, len(types))
 	for i, t := range types {
+		gti, ok := t.(*GenTypeInfo)
+		if ok {
+			typeInfos[i] = gti
+			continue
+		}
 		gti, err := ParseTypeInfo(t)
 		if err != nil {
 			return xerrors.Errorf("failed to parse type info: %w", err)
